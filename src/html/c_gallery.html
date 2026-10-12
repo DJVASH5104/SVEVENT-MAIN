@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Gallery</title>
+
+  <!-- Fonts used by Claudestyle.css (remove if your site already loads them) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- 1) Your existing stylesheet (unchanged)  2) the new gallery styles.
+       Change the paths if your CSS lives in a folder, e.g. href="css/Claudestyle.css" -->
+  <link rel="stylesheet" href="Claudestyle.css">
+  <link rel="stylesheet" href="gallery.css">
+    <link rel="stylesheet" href="./c_gallery.css">
+
+    <link rel="icon" type="image/png" href="../Images/Logo_crop.png">
+<link rel="stylesheet" href="../html/nav_styl1.css">
+<link rel="stylesheet" href="../html/./Claudestyle.css">
+
+
+</head>
+
+<body class="gallery-page">
+
+  <!-- nav -->
+  <nav class="navbar">
+    <div class="nav-logo">
+        <a href="./index.html">
+            <img src="../Images/Logo.png" alt="Logo">
+        </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="desktop-nav">
+
+        <ul class="nav-links">
+            <li><a href="./index.html#services">Services</a></li>
+            <li><a href="./index.html#pricing">Pricing</a></li>
+            <li><a href="./index.html#testimonials">Reviews</a></li>
+        </ul>
+
+        <a href="./index.html#contact" class="nav-cta" id="#contact">
+            Book Now
+        </a>
+
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="menu-button"
+            id="menuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+    <!-- Mobile Dropdown -->
+    <div class="mobile-menu" id="mobileMenu">
+
+        <ul>
+            <li><a href="./index.html#services">Services</a></li>
+            <li><a href="./index.html#events">Events</a></li>
+            <li><a href="./index.html#genres">Galary</a></li>
+            <li><a href="./index.html#pricing">Pricing</a></li>
+            <li><a href="./index.html#testimonials">Reviews</a></li>
+        </ul>
+
+        <a href="./index.html#contact" class="mobile-cta" id="#contact">
+            Book Now
+        </a>
+
+    </div>
+
+</nav>
+
+  <div class="g-bg" aria-hidden="true">
+    <div class="grid-bg"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+  </div>
+ 
+  <main>
+
+<!-- back button + time & date -->
+    <div class="g-toolbar">
+      <div class="g-toolbar-inner">
+        <a class="g-back" id="backBtn" href="./index.html">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 3 5 8l5 5"/>
+          </svg>
+          Back
+        </a>
+
+        <div class="g-clock">
+          <span class="g-date" id="gDate"></span>
+          <time class="g-time" id="gClock">--:--:--</time>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         TITLE
+         ================================================================= -->
+    <div class="gallery-head">
+      <h1 class="gallery-title">
+        <span>Photo</span>
+        <span class="g-outline">Gallery</span>
+      </h1>
+      <p class="gallery-sub">Open a folder to see the photos from each event.</p>
+    </div>
+
+    <!-- =================================================================
+         FOLDER SECTION  (5 image folders, each one is a link)
+
+         To edit a folder:
+           href="..."           the page that opens when the folder is clicked
+           folder-name          the folder title
+           folder-meta          photo count and date
+           style="--img: ..."   (optional) a real cover photo, e.g.
+                                <a class="folder" href="..." style="--img: url('Images/event1.JPG')">
+                                Without it, colour placeholders are shown.
+         To add a 6th folder: copy one <li>...</li> block (the grid
+         layout in gallery.css is set up for exactly 5).
+         ================================================================= -->
+    <section class="gallery-section">
+      <div class="container">
+
+        <div class="g-section-head">
+          <h2 class="g-section-title">All folders</h2>
+          <span class="g-section-count">5 folders, 126 photos</span>
+        </div>
+
+        <ul class="folder-grid">
+
+          <!-- Folder 1 -->
+          <li>
+            <a class="folder" href="gallery/live-events.html">
+              <span class="folder-back"></span>
+              <span class="folder-photos" aria-hidden="true">
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+              </span>
+              <span class="folder-front">
+                <span class="folder-open" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 10 4M5 4h5v5"/></svg>
+                </span>
+                <span>
+                  <span class="folder-name">Event Management</span>
+                  <span class="folder-meta"><span>32 photos</span><span>Oct 2026</span></span>
+                </span>
+              </span>
+            </a>
+          </li>
+
+          <!-- Folder 2 -->
+          <li>
+            <a class="folder" href="gallery/behind-the-decks.html">
+              <span class="folder-back"></span>
+              <span class="folder-photos" aria-hidden="true">
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+              </span>
+              <span class="folder-front">
+                <span class="folder-open" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 10 4M5 4h5v5"/></svg>
+                </span>
+                <span>
+                  <span class="folder-name"> Collage Events</span>
+                  <span class="folder-meta"><span>18 photos</span><span>Sep 2026</span></span>
+                </span>
+              </span>
+            </a>
+          </li>
+
+          <!-- Folder 3 -->
+          <li>
+            <a class="folder" href="gallery/crowd-moments.html">
+              <span class="folder-back"></span>
+              <span class="folder-photos" aria-hidden="true">
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+              </span>
+              <span class="folder-front">
+                <span class="folder-open" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 10 4M5 4h5v5"/></svg>
+                </span>
+                <span>
+                  <span class="folder-name">Marriage Events</span>
+                  <span class="folder-meta"><span>41 photos</span><span>Aug 2026</span></span>
+                </span>
+              </span>
+            </a>
+          </li>
+
+          <!-- Folder 4 -->
+          <li>
+            <a class="folder" href="gallery/backstage.html">
+              <span class="folder-back"></span>
+              <span class="folder-photos" aria-hidden="true">
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+              </span>
+              <span class="folder-front">
+                <span class="folder-open" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 10 4M5 4h5v5"/></svg>
+                </span>
+                <span>
+                  <span class="folder-name">Clubs</span>
+                  <span class="folder-meta"><span>15 photos</span><span>Jul 2026</span></span>
+                </span>
+              </span>
+            </a>
+          </li>
+
+          <!-- Folder 5 -->
+          <li>
+            <a class="folder" href="gallery/artist-portraits.html">
+              <span class="folder-back"></span>
+              <span class="folder-photos" aria-hidden="true">
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+                <span class="folder-photo"></span>
+              </span>
+              <span class="folder-front">
+                <span class="folder-open" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 10 4M5 4h5v5"/></svg>
+                </span>
+                <span>
+                  <span class="folder-name">Private Parties</span>
+                  <span class="folder-meta"><span>20 photos</span><span>Jun 2026</span></span>
+                </span>
+              </span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* BACK BUTTON
+       Go to the previous page if there is one; otherwise the normal
+       link (index.html) is followed. */
+    document.getElementById('backBtn').addEventListener('click', function (e) {
+      if (document.referrer || window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    });
+
+    /* LIVE DATE AND TIME
+       Uses the visitor's own device clock and language, updates every second. */
+    var clockEl = document.getElementById('gClock');
+    var dateEl  = document.getElementById('gDate');
+
+    function updateClock() {
+      var now = new Date();
+      clockEl.textContent = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' });
+      clockEl.setAttribute('datetime', now.toISOString());
+      dateEl.textContent  = now.toLocaleDateString([], { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+  
+
+</body>
+</html>

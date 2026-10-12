@@ -1,0 +1,459 @@
+/* =====================================================================
+   GALLERY PAGE - ADDITIONAL STYLES
+   ---------------------------------------------------------------------
+   Load this file AFTER Claudestyle.css:
+
+     <link rel="stylesheet" href="Claudestyle.css">
+     <link rel="stylesheet" href="gallery.css">
+
+   Nothing in Claudestyle.css is edited. This file only adds new classes
+   (all new class names start with "g-", "gallery-" or "folder") and
+   re-uses the colour variables already defined in Claudestyle.css:
+
+     --neon  #FF2D78   pink      --dark   #050508   page background
+     --neon2 #00F5FF   cyan      --dark2  #0D0D14   panels
+     --neon3 #FFE600   yellow    --dark3  #13131F   cards
+     --text / --muted / --glass / --glass-border
+
+   Existing classes re-used from Claudestyle.css:
+     .container  .grid-bg  .orb  .orb1  .orb2
+
+   CONTENTS
+     1. Page setup (nav height + background effects)
+     2. Demo top bar (placeholder - delete it, keep your own nav)
+     3. Back button + live time bar
+     4. Title block
+     5. Folder section header
+     6. Folder grid
+     7. Folder design (back, photos, front)
+     8. Hover / keyboard focus
+     9. Responsive
+    10. Reduced motion
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1. PAGE SETUP
+   Put class="gallery-page" on <body>.
+   --g-nav-h  = height of your top nav bar. Change it if your nav is
+                taller or shorter, so the page content starts below it.
+   --------------------------------------------------------------------- */
+
+body {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Fade out before opening the next page */
+body.fade-out {
+    opacity: 0;
+}
+
+
+.gallery-page {
+  --g-nav-h: 5rem;
+  padding-top: var(--g-nav-h);
+}
+
+/* Fixed layer behind everything: re-uses the grid lines and glowing
+   orbs from Claudestyle.css so the page matches the rest of the site. */
+.g-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------------------
+   2. DEMO TOP BAR
+   Only a placeholder so this page looks complete on its own.
+   Delete the <header class="g-topbar"> block in gallery.html and use
+   your real nav bar instead. Then you can delete this section too.
+   --------------------------------------------------------------------- */
+.g-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--g-nav-h);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(5, 5, 8, 0.82);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--glass-border);
+}
+.g-topbar-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-decoration: none;
+}
+.g-topbar-logo span { color: var(--neon); }
+.g-topbar-links { display: flex; gap: 2.5rem; list-style: none; }
+.g-topbar-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.g-topbar-links a:hover,
+.g-topbar-links a[aria-current="page"] { color: var(--text); }
+
+
+/* ---------------------------------------------------------------------
+   3. BACK BUTTON + LIVE TIME BAR
+   Sits directly under the nav bar. Back button on the left,
+   date and live clock on the right.
+   --------------------------------------------------------------------- */
+.g-toolbar {
+  position: relative;
+  z-index: 20;
+  background: rgba(13, 13, 20, 0.7);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--glass-border);
+}
+.g-toolbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.9rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Back button - same slanted shape as .btn-outline / .nav-cta */
+.g-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.5rem 0.6rem 1.2rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.g-back svg { transition: transform 0.3s; }
+.g-back:hover,
+.g-back:focus-visible {
+  color: var(--neon2);
+  border-color: var(--neon2);
+  background: rgba(0, 245, 255, 0.06);
+}
+.g-back:hover svg,
+.g-back:focus-visible svg { transform: translateX(-4px); }
+
+/* Date + time */
+.g-clock {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-variant-numeric: tabular-nums;   /* digits keep the same width, so the time doesn't jiggle */
+}
+.g-date { font-size: 0.8rem; color: var(--muted); }
+.g-time { font-size: 1.05rem; font-weight: 500; color: var(--text); }
+
+
+/* ---------------------------------------------------------------------
+   4. TITLE BLOCK
+   Same look as the hero title: solid first line, outlined second line.
+   --------------------------------------------------------------------- */
+.gallery-head {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 3rem;
+}
+.gallery-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(3.6rem, 11vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+.gallery-title span { display: block; }
+.gallery-title .g-outline {
+  -webkit-text-stroke: 2px rgba(248, 248, 248, 0.3);
+  color: transparent;
+}
+.gallery-sub {
+  margin-top: 1.5rem;
+  max-width: 44ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------------------
+   5. FOLDER SECTION HEADER
+   NOTE: the base file has "section { padding: 8rem 2rem }". The class
+   below is more specific, so it wins at every screen size.
+   --------------------------------------------------------------------- */
+.gallery-section {
+  position: relative;
+  z-index: 10;
+  padding: 1rem 2rem 6rem;
+}
+.g-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 3.5rem;      /* extra room: folder tabs and photos pop above the folders */
+  border-bottom: 1px solid var(--glass-border);
+}
+.g-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+.g-section-count { font-size: 0.85rem; color: var(--muted); }
+
+
+/* ---------------------------------------------------------------------
+   6. FOLDER GRID
+   5 folders in one row on desktop (see section 9 for tablet / phone).
+   --------------------------------------------------------------------- */
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 3rem 1.25rem;
+  list-style: none;
+}
+
+/* Each folder gets its own accent colour from the palette */
+.folder-grid > li:nth-child(3n+1) .folder { --accent: var(--neon); }
+.folder-grid > li:nth-child(3n+2) .folder { --accent: var(--neon2); }
+.folder-grid > li:nth-child(3n)   .folder { --accent: var(--neon3); }
+
+
+/* ---------------------------------------------------------------------
+   7. FOLDER DESIGN
+   Each folder is ONE link (<a class="folder">) built from 3 layers:
+     .folder-back    the back panel + the little tab on top
+     .folder-photos  3 photo cards that peek out of the folder
+     .folder-front   the front panel with name, photo count and arrow
+   --------------------------------------------------------------------- */
+.folder {
+  position: relative;
+  display: block;
+  aspect-ratio: 5 / 4.4;
+  color: var(--text);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Back panel colour: accent mixed into dark. Plain dark is the fallback
+   for very old browsers that don't support color-mix(). */
+.folder { --folder-back: var(--dark3); }
+@supports (background: color-mix(in srgb, red 50%, blue)) {
+  .folder { --folder-back: color-mix(in srgb, var(--accent) 30%, var(--dark3)); }
+}
+
+.folder-back {
+  position: absolute;
+  inset: 0;
+  background: var(--folder-back);
+  transition: box-shadow 0.4s;
+}
+/* The folder tab, slanted like the buttons in Claudestyle.css */
+.folder-back::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -16px;
+  width: 44%;
+  height: 17px;
+  background: var(--folder-back);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+}
+
+/* Photo cards ---------------------------------------------------------
+   To use real pictures, add this to the folder link in gallery.html:
+     style="--img: url('Images/your-photo.jpg')"
+   Without it, the cards show colour gradients as placeholders.        */
+.folder-photos {
+  position: absolute;
+  left: 7%; right: 7%;
+  top: 10%; bottom: 30%;
+}
+.folder-photo {
+  position: absolute;
+  top: 0;
+  width: 58%;
+  height: 100%;
+  background-color: var(--dark2);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 3px solid var(--text);          /* print-style white edge, so it reads as a photo */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  transform-origin: 50% 100%;
+  transform: translateY(0) rotate(var(--r));
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* --r = tilt at rest, --lift = how far the card slides up on hover */
+.folder-photo:nth-child(1) {
+  left: 0;
+  --r: -8deg; --lift: -10%;
+  background-image: var(--img, linear-gradient(135deg, rgba(0,245,255,0.6), #1a0a2e));
+  background-position: 15% 50%;
+}
+.folder-photo:nth-child(2) {
+  left: 21%;
+  --r: 2deg; --lift: -22%;
+  background-image: var(--img, linear-gradient(160deg, var(--accent), #1a0a2e));
+  background-position: 50% 50%;
+}
+.folder-photo:nth-child(3) {
+  left: 42%;
+  --r: 9deg; --lift: -12%;
+  background-image: var(--img, linear-gradient(135deg, rgba(255,230,0,0.55), #0f0a14));
+  background-position: 85% 50%;
+}
+
+/* Front panel */
+.folder-front {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 70%;
+  padding: 0.9rem 1.1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 2px solid var(--accent);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03)),
+    var(--dark2);
+  box-shadow: 0 -10px 30px -12px rgba(0, 0, 0, 0.6);
+}
+.folder-open {
+  align-self: flex-end;
+  width: 28px; height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(240, 238, 248, 0.2);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.folder-name {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 2.1vw, 2rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+.folder-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------------------
+   8. HOVER / KEYBOARD FOCUS
+   Photos slide up out of the folder, the arrow lights up in the
+   folder's accent colour. Keyboard users (Tab key) get the same effect
+   plus a visible outline.
+   --------------------------------------------------------------------- */
+.folder:hover .folder-photo,
+.folder:focus-visible .folder-photo {
+  transform: translateY(var(--lift)) rotate(var(--r));
+}
+.folder:hover .folder-back,
+.folder:focus-visible .folder-back {
+  box-shadow: 0 26px 50px -26px var(--accent);
+}
+.folder:hover .folder-open,
+.folder:focus-visible .folder-open {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+.folder:focus-visible { outline: 2px solid var(--neon2); outline-offset: 8px; }
+
+/* Touch screens have no hover, so keep the photos slightly raised */
+@media (hover: none) {
+  .folder-photo { transform: translateY(-8%) rotate(var(--r)); }
+}
+
+
+/* ---------------------------------------------------------------------
+   9. RESPONSIVE  (same breakpoints idea as Claudestyle.css)
+   <= 1100px  3 folders on the first row, 2 wider ones below
+   <=  700px  2 columns, last folder full width
+   <=  480px  1 column
+   --------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .folder-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3rem 1.5rem; }
+  .folder-grid > li { grid-column: span 2; }
+  .folder-grid > li:nth-child(n+4) { grid-column: span 3; }
+  .folder-grid > li:nth-child(n+4) .folder { aspect-ratio: 5 / 3.4; }
+  .folder-name { font-size: 2rem; }
+}
+
+@media (max-width: 900px) {
+  .g-topbar { padding: 0 1.5rem; }
+  .g-topbar-links { display: none; }
+}
+
+@media (max-width: 700px) {
+  .gallery-head { padding: 3rem 1.5rem 2rem; }
+  .gallery-section { padding: 1rem 1.5rem 4rem; }
+  .g-toolbar-inner { padding: 0.8rem 1.5rem; }
+
+  .folder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.75rem 1rem; }
+  .folder-grid > li,
+  .folder-grid > li:nth-child(n+4) { grid-column: auto; }
+  .folder-grid > li:last-child { grid-column: 1 / -1; }
+  .folder-grid > li:nth-child(n+4) .folder { aspect-ratio: 5 / 4.4; }
+  .folder-grid > li:last-child .folder { aspect-ratio: 5 / 3; }
+  .folder-name { font-size: 1.6rem; }
+}
+
+@media (max-width: 480px) {
+  .gallery-head { padding: 2.5rem 1.25rem 1.5rem; }
+  .gallery-section { padding: 1rem 1.25rem 3.5rem; }
+  .g-toolbar-inner { padding: 0.8rem 1.25rem; }
+  .g-date { display: none; }                 /* keep only the time on small phones */
+
+  .folder-grid { grid-template-columns: minmax(0, 1fr); }
+  .folder-grid > li:last-child { grid-column: auto; }
+  .folder-grid > li:last-child .folder { aspect-ratio: 5 / 4.4; }
+  .folder-name { font-size: 2rem; }
+}
+
+
+/* ---------------------------------------------------------------------
+   10. REDUCED MOTION
+   Respect the device setting "reduce motion": no sliding, no pulsing.
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .folder-photo,
+  .folder-open,
+  .folder-back,
+  .g-back,
+  .g-back svg { transition: none; }
+  .g-bg .grid-bg,
+  .g-bg .orb { animation: none; }
+}
+
+/* ===================== END OF GALLERY STYLES ===================== */

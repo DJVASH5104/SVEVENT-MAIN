@@ -1,0 +1,160 @@
+/* ==========================================================
+   DJ VASH PORTFOLIO - style.css
+   Neon theme: pink #FF2D78, cyan #00F5FF, yellow #FFE600
+   Keep this file in the same folder as index.html
+   ========================================================== */
+
+/* RESET: remove default browser spacing; box-sizing makes width include padding */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+/* THEME COLOURS (from Claudestyle.css): pink/cyan/yellow neon accents + dark backgrounds. Change here to re-theme the whole site */
+:root{--neon:#FF2D78;--neon2:#00F5FF;--neon3:#FFE600;--dark:#050508;--dark2:#0D0D14;--dark3:#13131F;--glass:rgba(255,255,255,.04);--gb:rgba(255,255,255,.08);--text:#F0EEF8;--muted:rgba(240,238,248,.5);color-scheme:dark;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Smooth scrolling when nav links jump to sections */
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+/* Page base: dark background, light text, Space Grotesk font, no sideways scroll */
+body{background:var(--dark);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;overflow-x:hidden}
+/* Helper class: applies the Bebas Neue display font to any element */
+.bn{font-family:'Bebas Neue',Impact,sans-serif;font-weight:400}
+/* NAVIGATION BAR: fixed at top, logo left, links + Book Now button right */
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:linear-gradient(rgba(5,5,8,.92),transparent)}
+/* Logo text; the pink part is the <b> tag */
+.logo{font-size:1.9rem;letter-spacing:.08em}.logo b{color:var(--neon);font-weight:400}
+/* Nav links list (hidden on tablets/phones in the media query) */
+nav ul{display:flex;gap:2rem;list-style:none}nav a{color:var(--muted);text-decoration:none;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;transition:.3s}nav a:hover{color:var(--neon2)}
+/* 'Book Now' button: pink slanted shape that turns cyan on hover */
+.cta{background:var(--neon);color:#000!important;padding:.6rem 1.5rem;font-weight:700;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:.3s}.cta:hover{background:var(--neon2);transform:scale(1.07)}
+/* Film-grain texture overlay across the whole page for a gritty club feel */
+.noise::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+/* CUSTOM CURSOR: a pink dot plus a cyan ring that follows it (moved by JS, hidden on touch screens) */
+.cur,.ring{position:fixed;top:0;left:0;pointer-events:none;z-index:999;border-radius:50%;transform:translate(-50%,-50%)}
+.cur{width:10px;height:10px;background:var(--neon)}.ring{width:38px;height:38px;border:1.5px solid var(--neon2);transition:width .25s,height .25s}
+.ring.big{width:64px;height:64px;border-color:var(--neon3)}
+@media(hover:none){.cur,.ring{display:none}}
+/* SECTION LAYOUT: shared padding and max width for every content section */
+section{padding:6rem 2rem;position:relative;max-width:1200px;margin:0 auto}
+/* Small pink label above each heading with a line before it */
+.tag{font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--neon);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.tag::before{content:'';width:40px;height:1px;background:var(--neon)}
+/* Section headings: huge Bebas text; <em> = cyan glow, <i> = pink glow */
+h2{font-size:clamp(3rem,8vw,6.5rem);line-height:.92;letter-spacing:.01em}
+h2 em{font-style:normal;color:var(--neon2);text-shadow:0 0 30px rgba(0,245,255,.5)}
+h2 i{font-style:normal;color:var(--neon);text-shadow:0 0 30px rgba(255,45,120,.5)}
+/* Paragraph text under headings: muted colour, comfortable line height */
+.lead{color:var(--muted);line-height:1.8;max-width:620px;margin-top:1.5rem;font-size:1.05rem}
+.lead b{color:var(--text)}
+/* HERO */
+/* HERO SECTION: two-column grid (text left, photo right), full screen height */
+#hero{min-height:100svh;max-width:none;display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:center;padding:8rem max(2rem,calc((100vw - 1200px)/2)) 6rem;overflow:hidden}
+/* Pink grid lines that pulse and fade out toward the edges */
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,45,120,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,120,.05) 1px,transparent 1px);background-size:60px 60px;animation:gp 6s infinite;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+@keyframes gp{50%{opacity:.4}}
+/* Blurred glowing colour balls that float behind the hero (.o1 pink, .o2 cyan, .o3 yellow) */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:of var(--d,8s) ease-in-out infinite alternate}
+.o1{width:500px;height:500px;background:rgba(255,45,120,.2);top:-120px;left:-120px}.o2{width:420px;height:420px;background:rgba(0,245,255,.14);bottom:-80px;right:-60px;--d:10s}.o3{width:300px;height:300px;background:rgba(255,230,0,.09);top:45%;left:40%;--d:12s}
+@keyframes of{to{transform:translate(50px,40px) scale(1.15)}}
+/* Hero text column sits above the background effects */
+.hero-t{position:relative;z-index:2}
+/* Giant 'DJ VASH' title; VASH is outlined in cyan and fills with pink by animation */
+.title{font-size:clamp(6rem,19vw,15rem);line-height:.82;letter-spacing:-.01em;margin:.5rem 0 1.5rem}
+.title span{display:block}
+.title .l2{color:transparent;-webkit-text-stroke:2px var(--neon2);position:relative}
+.title .l2::after{content:attr(data-t);position:absolute;left:0;top:0;color:var(--neon);-webkit-text-stroke:0;clip-path:inset(0 100% 0 0);animation:fill 3.5s ease-in-out infinite alternate;text-shadow:0 0 40px rgba(255,45,120,.6)}
+@keyframes fill{to{clip-path:inset(0 0 0 0)}}
+/* GLITCH EFFECT: two shifted copies of the text (pink + cyan) jitter now and then */
+.glitch{position:relative}.glitch::before,.glitch::after{content:attr(data-t);position:absolute;inset:0;overflow:hidden}
+.glitch::before{color:var(--neon2);clip-path:inset(0 0 50% 0);animation:gt 3s infinite}.glitch::after{color:var(--neon);clip-path:inset(50% 0 0 0);animation:gb 3s infinite}
+@keyframes gt{0%,90%,100%{transform:none}92%{transform:translateX(-4px)}94%{transform:translateX(4px)}}
+@keyframes gb{0%,88%,100%{transform:none}90%{transform:translateX(4px)}93%{transform:translateX(-4px)}}
+/* Hero tagline text; <b> words are highlighted yellow */
+.sub{font-size:1.3rem;line-height:1.6;color:var(--muted);max-width:480px}.sub b{color:var(--neon3);font-weight:500}
+/* Hero buttons row */
+.btns{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+/* Shared button shape (slanted corners); .b1 = pink glowing, .b2 = dark/cyan */
+.btn{padding:1rem 2.2rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;text-decoration:none;transition:.3s;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.b1{background:var(--neon);color:#000;box-shadow:0 0 30px rgba(255,45,120,.5)}.b1:hover{background:var(--neon3);transform:translateY(-4px) scale(1.04)}
+.b2{background:var(--gb);color:var(--neon2)}.b2:hover{background:var(--neon2);color:#000;transform:translateY(-4px)}
+/* PHOTO: 3D tilt container, animated colour-cycling border frame, bouncing yellow badge */
+.photo{position:relative;z-index:2;perspective:900px}
+.frame{position:relative;transform-style:preserve-3d;transition:transform .15s}
+.frame::before{content:'';position:absolute;inset:-14px -14px 14px 14px;border:2px solid var(--neon3);z-index:-1;animation:bd 4s infinite alternate}
+@keyframes bd{50%{border-color:var(--neon);inset:-20px -20px 20px 20px}100%{border-color:var(--neon2)}}
+.frame img{width:100%;display:block;filter:saturate(1.3) contrast(1.05);box-shadow:0 0 60px rgba(255,45,120,.35)}
+.badge{position:absolute;bottom:-1.2rem;left:-1.5rem;background:var(--neon3);color:#000;padding:.6rem 1.2rem;font-size:1.6rem;letter-spacing:.06em;transform:rotate(-5deg);animation:bob 2.5s ease-in-out infinite alternate}
+@keyframes bob{to{transform:rotate(-2deg) translateY(-8px)}}
+/* EQUALIZER: row of animated bars at the bottom of the hero (bars are created by JS) */
+.eq{position:absolute;bottom:0;left:0;right:0;height:140px;display:flex;align-items:flex-end;justify-content:center;gap:3px;opacity:.2;pointer-events:none}
+.bar{flex:1;max-width:8px;background:linear-gradient(to top,var(--neon),var(--neon2));border-radius:3px 3px 0 0;animation:bd2 var(--d,1.2s) ease-in-out infinite alternate}
+@keyframes bd2{from{height:8px}to{height:var(--m,90px)}}
+/* MARQUEE */
+/* MARQUEE: tilted pink strip with scrolling text (text is created by JS) */
+.mq{background:var(--neon);color:#000;overflow:hidden;padding:.9rem 0;transform:rotate(-1.2deg);margin:2rem -2rem;box-shadow:0 0 40px rgba(255,45,120,.4)}
+.mq div{display:flex;width:max-content;animation:mq 22s linear infinite;font-size:2rem;letter-spacing:.08em}
+.mq span{padding:0 1.5rem}.mq span:nth-child(even){color:#fff}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* ABOUT */
+/* ABOUT SECTION: text column + facts column */
+.ab{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:start;margin-top:2rem}
+/* Role chips (DJ Artist, Founder, etc.) with glow on hover */
+.roles{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+.chip{padding:.5rem 1.1rem;border:1px solid var(--gb);background:var(--glass);font-size:.85rem;transition:.3s;border-radius:100px}.chip:hover{border-color:var(--neon);box-shadow:0 0 20px rgba(255,45,120,.4);transform:translateY(-3px)}
+/* Fact boxes: Based in / Founder of / Education */
+.facts{display:grid;gap:1px;background:var(--gb);border:1px solid var(--gb)}
+.fact{background:var(--dark2);padding:1.3rem 1.5rem}.fact small{display:block;font-size:.68rem;letter-spacing:.2em;color:var(--neon);text-transform:uppercase;margin-bottom:.4rem}
+/* STATS: four highlight boxes with a growing gradient underline on hover */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3.5rem}
+.stat{background:var(--glass);border:1px solid var(--gb);padding:1.6rem;position:relative;overflow:hidden;transition:.4s}
+.stat::after{content:'';position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,var(--neon),var(--neon2));transition:.5s}.stat:hover::after{width:100%}.stat:hover{transform:translateY(-8px);border-color:var(--neon2)}
+.num{font-size:3.6rem;line-height:1;color:var(--neon3);text-shadow:0 0 25px rgba(255,230,0,.4)}.stat p{color:var(--muted);font-size:.85rem;margin-top:.5rem}
+/* CARDS */
+/* SV EVENT PRODUCTION cards: 3-column grid; glow follows the mouse (--x/--y set by JS) */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+.card{position:relative;background:var(--dark3);border:1px solid var(--gb);padding:2rem 1.7rem;overflow:hidden;transition:.4s;--c:var(--neon)}
+.card:nth-child(3n+2){--c:var(--neon2)}.card:nth-child(3n){--c:var(--neon3)}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--x,50%) var(--y,0%),color-mix(in srgb,var(--c) 22%,transparent),transparent 60%);opacity:0;transition:.4s}
+.card:hover{transform:translateY(-8px);border-color:var(--c);box-shadow:0 12px 40px color-mix(in srgb,var(--c) 25%,transparent)}.card:hover::before{opacity:1}
+.card>*{position:relative}.card .n{position:absolute;right:1rem;top:.4rem;font-size:3.6rem;color:rgba(255,255,255,.05)}
+.card h3{font-size:1.3rem;font-weight:500;margin-bottom:.6rem;color:var(--c)}.card p{color:var(--muted);font-size:.9rem;line-height:1.6}
+/* DJ PERFORMANCE venue tiles: flip pink and tilt on hover */
+.venues{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+.venue{padding:2.2rem 1rem;text-align:center;font-size:2rem;letter-spacing:.06em;border:1px solid var(--gb);background:var(--glass);transition:.35s;cursor:default}
+.venue:hover{background:var(--neon);color:#000;transform:scale(1.05) rotate(-1.5deg);box-shadow:0 0 40px rgba(255,45,120,.5)}
+/* Yellow accent text */
+.sv{font-size:1.5rem;margin-top:2rem;color:var(--neon3)}
+/* VALUES */
+/* CORE VALUES: outlined big words that light up pink on hover */
+.vals{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem}
+.val{font-size:clamp(2rem,5vw,3.6rem);color:transparent;-webkit-text-stroke:1.5px var(--text);transition:.3s;cursor:default}.val:hover{color:var(--neon);-webkit-text-stroke-color:var(--neon);text-shadow:0 0 30px var(--neon)}
+/* EXPERIENCE */
+/* EXPERIENCE list: rows that slide and get a pink left border on hover */
+.xp{margin-top:3rem;border-top:1px solid var(--gb)}
+.row{display:grid;grid-template-columns:1fr 1.4fr;gap:2rem;padding:1.8rem 1rem;border-bottom:1px solid var(--gb);transition:.35s}
+.row:hover{background:var(--glass);padding-left:2rem;border-left:3px solid var(--neon)}.row h3{font-size:1.4rem;font-weight:500}.row p{color:var(--muted);line-height:1.6}
+/* ACADEMY box: gradient card with a cyan glow and a hover list */
+.acad{margin-top:4rem;padding:3rem;background:linear-gradient(135deg,var(--dark3),var(--dark2));border:1px solid var(--gb);display:grid;grid-template-columns:1fr 1fr;gap:3rem;position:relative;overflow:hidden}
+.acad::before{content:'';position:absolute;width:300px;height:300px;right:-80px;top:-80px;background:rgba(0,245,255,.12);filter:blur(70px)}
+.acad h3{font-size:3.2rem;line-height:1;position:relative}.acad h3 span{color:var(--neon2)}
+.acad ul{list-style:none;position:relative}.acad li{padding:.9rem 0;border-top:1px solid var(--gb);transition:.3s}.acad li::before{content:'▶ ';color:var(--neon);font-size:.7rem}.acad li:hover{padding-left:.8rem;color:var(--neon3)}
+/* CONTACT */
+/* CONTACT SECTION: centred layout */
+#contact{text-align:center}
+/* Huge contact heading; the <span> has a moving rainbow gradient text */
+.big{font-size:clamp(3.5rem,11vw,9rem);line-height:.9}
+.big span{background:linear-gradient(90deg,var(--neon),var(--neon3),var(--neon2),var(--neon));background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gr 5s linear infinite}
+@keyframes gr{to{background-position:300%}}
+/* Contact boxes grid (phone, email, Instagram, location) */
+.cg{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:3rem auto 0;max-width:820px;text-align:left}
+.ct{display:block;padding:1.5rem 1.8rem;border:1px solid var(--gb);background:var(--glass);text-decoration:none;color:var(--text);transition:.35s}
+.ct small{display:block;font-size:.68rem;letter-spacing:.22em;color:var(--neon);text-transform:uppercase;margin-bottom:.5rem}.ct span{font-size:1.15rem;word-break:break-word}
+.ct:hover{border-color:var(--neon2);transform:translateY(-6px);box-shadow:0 10px 40px rgba(0,245,255,.2)}
+/* Closing yellow tagline */
+.end{margin-top:3rem;font-size:1.6rem;line-height:1.5;color:var(--neon3)}
+/* FOOTER: names on the left, location on the right */
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:2rem;border-top:1px solid var(--gb);color:var(--muted);font-size:.8rem;max-width:1200px;margin:0 auto}
+/* SCROLL REVEAL: elements start hidden/lower; JS adds .v when they enter the screen */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .7s,transform .7s}.rv.v{opacity:1;transform:none}
+/* RESPONSIVE (tablets): single columns, hide nav links, smaller padding */
+@media(max-width:900px){nav ul{display:none}#hero{grid-template-columns:1fr;padding-top:7rem}.photo{max-width:340px;margin:0 auto 1rem}.ab,.acad,.row{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.cards,.venues{grid-template-columns:repeat(2,1fr)}section{padding:4.5rem 1.25rem}.mq{margin:2rem -1.25rem}}
+/* RESPONSIVE (phones): everything becomes one column */
+@media(max-width:560px){.cards,.venues,.cg{grid-template-columns:1fr}.acad{padding:1.8rem}.num{font-size:2.8rem}}
+/* ACCESSIBILITY: turn off animations for users who prefer less motion */
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.rv{opacity:1;transform:none}}
